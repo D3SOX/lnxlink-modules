@@ -16,12 +16,8 @@ class Addon:
 
     def start_control(self, topic, data):
         """Control system"""
-        self.lnxlink.temp_connection_callback(True)
-        returncode = None
-        if which("dbus-send") is not None and returncode != 0:
-            _, _, returncode = syscommand("/bin/dbus-send --session --print-reply --dest=org.kde.kglobalaccel /component/org_kde_powerdevil org.kde.kglobalaccel.Component.invokeShortcut string:'Turn Off Screen'")
-        if returncode != 0:
-            self.lnxlink.temp_connection_callback(False)
+        if which("dbus-send") is not None:
+            syscommand("/bin/dbus-send --session --print-reply --dest=org.kde.kglobalaccel /component/org_kde_powerdevil org.kde.kglobalaccel.Component.invokeShortcut string:'Turn Off Screen'")
 
     def exposed_controls(self):
         """Exposes to home assistant"""
